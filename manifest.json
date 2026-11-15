@@ -1,0 +1,9 @@
+{
+  "id": "terminal-session-navigator",
+  "name": "终端会话导航",
+  "version": "0.1.1",
+  "minAppVersion": "1.5.0",
+  "description": "为已有 Terminal 标签提供纵向列表、命名、分组、搜索和快速切换。",
+  "author": "MXH",
+  "isDesktopOnly": true
+}

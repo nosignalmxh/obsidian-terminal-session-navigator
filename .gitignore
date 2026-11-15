@@ -1,0 +1,10 @@
+# Local session aliases and groups belong to each user's vault.
+data.json
+.obsidian/
+.codex/
+.DS_Store
+.env
+.env.*
+*.log
+node_modules/
+dist/
