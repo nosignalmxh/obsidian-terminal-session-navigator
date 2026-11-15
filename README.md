@@ -1,115 +1,56 @@
-# Terminal Session Navigator · 终端会话导航
+# AI 时代，用 Obsidian 作为你的科研和工作中台吧！
 
-A lightweight Obsidian desktop plugin that adds a vertical, searchable list of existing Terminal tabs, with custom names, groups, and click-to-switch navigation. Keep using your terminal and Codex CLI. The current interface is in Chinese.
+让论文、实验记录和项目进展沉淀成 Markdown，按需交给 Agent 作为 **Context**。多个任务同时推进，也能在同一个工作台里找到各自的对话。
 
-给 Obsidian 的 [Terminal（polyipseity）](https://github.com/polyipseity/obsidian-terminal) 插件增加一个纵向会话列表。终端很多时，可以通过任务名和分组找到目标，不必挨个查看顶部标签。
+**Terminal Session Navigator · 终端会话导航**，为 Obsidian 的 Terminal 插件增加一个轻量会话列表，继续使用你熟悉的终端和 Codex CLI。
 
 ```text
-┌──────────────────┬──────────────────────┬───────────────────┐
-│ Markdown 笔记    │ 终端会话             │ 原有 Terminal     │
-│                  │ 搜索名称、分组或目录 │                   │
-│ 项目记录         │ ▾ 科研               │ 当前选中的终端    │
-│ 上下文文档       │   项目 A：修改论文   │ Codex CLI / shell │
-│ 每日任务         │   项目 B：检查实验   │                   │
-│                  │ ▸ 生活               │                   │
-└──────────────────┴──────────────────────┴───────────────────┘
+Markdown / Context  │  会话列表：命名、分组、搜索  │  Terminal / Codex
 ```
 
-上图是布局示意。终端位于右侧栏时，新建列表默认插在主区域 Markdown 与右侧终端之间；布局不同的 vault 可以自行拖动列表面板。
-
-## 功能
-
-- 自动列出当前打开的 Terminal 标签，点击切换并聚焦原终端。
-- 双击、右键或点击条目右侧 `⋯`，设置容易识别的任务名称。
-- 新增、重命名、折叠分组，以及移动会话；预设分组为「科研」「Simple」「生活」。
-- 按名称、分组或工作目录搜索；搜索时临时展开匹配分组。
-- 名称自动换行，列表纵向滚动，面板宽度可拖动调整。
-- 支持键盘操作和 Obsidian 命令面板。
-
-纯 JavaScript + CSS，无构建步骤、额外服务、npm 运行时依赖或后台轮询。
-
-## 使用前提
-
-1. 桌面版 Obsidian。
-2. 已安装并启用 **Terminal（作者 polyipseity，插件 ID 为 `terminal`）**，能够打开集成终端。Terminal 本身的安装和环境要求见[上游说明](https://github.com/polyipseity/obsidian-terminal)。
-3. 要在终端中使用 Codex，请自行安装并配置 Codex CLI。导航插件本身不依赖 Codex，也可以导航普通 shell。
-
-已实际验证：macOS、Obsidian **1.14.5**、Terminal **3.23.0**。清单声明的最低 Obsidian 版本为 1.5.0，但尚未在该旧版本或 Windows/Linux 上实测。本插件按 Terminal 的视图类型、工作目录和聚焦接口进行适配；上游接口变化可能需要相应更新。详见 [VALIDATION.md](VALIDATION.md)。
+- **每个任务有名字**：给论文修改、实验分析、项目开发的终端分别命名。
+- **按项目收拢对话**：多个 Agent 的终端会话分组排列，支持折叠和搜索。
+- **点击继续工作**：直接切换到原终端，名称自动换行，列表宽度可调整。
 
 ## 安装
 
-当前采用 GitHub 分发，尚未收录进 Obsidian 社区插件目录。
+需要**桌面版 Obsidian**；终端里的 Codex 等 Agent 请自行配置。目前通过 GitHub 分发。
 
-[下载 0.1.1 安装包](https://github.com/nosignalmxh/obsidian-terminal-session-navigator/releases/download/0.1.1/terminal-session-navigator-0.1.1.zip) · [查看所有版本](https://github.com/nosignalmxh/obsidian-terminal-session-navigator/releases)
+### 方式一：手动安装
 
-1. 先安装、启用 Terminal，并确认其集成终端可用。
-2. 从上方安装包解压出 `terminal-session-navigator` 文件夹，放到 vault 的 `.obsidian/plugins/` 中。也可以从源码或 Release 单独复制以下三个文件：
+1. 在 Obsidian「设置 → 第三方插件 → 浏览」中找到并安装 **[Terminal](https://github.com/polyipseity/obsidian-terminal)**（作者 **polyipseity**），启用后确认能打开集成终端。
+2. [下载 0.1.1 安装包](https://github.com/nosignalmxh/obsidian-terminal-session-navigator/releases/download/0.1.1/terminal-session-navigator-0.1.1.zip)，解压得到 `terminal-session-navigator` 文件夹。
+3. 把文件夹放到你的 vault 中：`.obsidian/plugins/terminal-session-navigator/`，该目录内应直接包含 `main.js`、`manifest.json`、`styles.css`。macOS 可按 `⌘⇧.` 显示隐藏文件夹；若使用自定义配置目录，请用它替换 `.obsidian`。
+4. 在「设置 → 第三方插件」中启用 **终端会话导航**，再从命令面板运行 **打开终端会话列表**。
 
-   ```text
-   <vault>/.obsidian/plugins/terminal-session-navigator/
-   ├── main.js
-   ├── manifest.json
-   └── styles.css
-   ```
+终端在右侧栏时，列表默认位于 Markdown 与终端之间，也可以拖动调整。升级时保留已有的 `data.json`，其中保存了名称和分组。
 
-3. 打开「设置 → 第三方插件」，启用 **终端会话导航**。
-4. 点击工具栏的列表树图标，或在命令面板运行 **终端会话导航：打开终端会话列表**。
+### 方式二：让 Agent 安装
 
-如果新插件没有出现在列表中，可关闭后重新打开设置面板。仍无法识别时，先结束或妥善保存正在运行的终端任务，再重启 Obsidian。
+把下面的 vault 路径替换成自己的路径，交给能操作本机文件的 Agent：
 
-首次打开时，列表优先出现在主区域可见 Markdown 的右侧，目标宽度约 240px；没有主区域 Markdown 时使用左侧栏。已有面板的位置和手动调整的宽度会保留。
+```text
+请直接帮我安装 Obsidian 插件“终端会话导航”。
+仓库：https://github.com/nosignalmxh/obsidian-terminal-session-navigator
+目标 vault：<填写你的 vault 路径>
 
-更新时只替换上述三个文件，并停用后重新启用本插件；保留原来的 `data.json`，其中存有你的别名和分组。安装或更新导航插件不需要重载 Terminal。
+1. 确认目标 vault 及配置目录（默认 .obsidian）。检查 Terminal
+   （polyipseity，插件 ID：terminal）是否可用；缺少时按其官方说明安装：
+   https://github.com/polyipseity/obsidian-terminal
+2. 从导航插件仓库的最新正式 Release 下载 main.js、manifest.json、
+   styles.css，放入 <配置目录>/plugins/terminal-session-navigator/。
+   核对 manifest 的插件 ID 和版本，升级时保留已有 data.json。
+3. 通过可用的 Obsidian CLI 或界面启用导航插件；若无法直接操作，
+   告诉我需要在哪里点击。完成后报告安装路径、版本和实际启用状态。
 
-## 日常使用
-
-| 操作 | 方法 |
-| --- | --- |
-| 查看某个终端 | 点击对应条目 |
-| 设置任务名 | 双击条目，或 `⋯ → 重命名`；留空恢复默认名称 |
-| 移入分组 | 条目 `⋯ → 移动到分组…` |
-| 新建分组 | 顶部文件夹加号，或分组选择窗口中的新建按钮 |
-| 重命名／移除分组 | 分组标题右侧 `⋯` |
-| 折叠分组 | 点击分组标题 |
-| 搜索 | 输入任务名称、分组或目录；Esc 清空 |
-| 键盘切换 | 搜索框中按 ↓ 进入列表；列表中 ↑/↓ 移动，Enter 切换，F2 重命名 |
-
-搜索框中按 Enter 可切换到第一条匹配结果。清空搜索后，分组恢复原来的折叠状态。移除分组会把会话移回「未分组」。
-
-可在 Obsidian「快捷键」中为打开列表、搜索、重命名当前终端、将当前终端移入分组和新建分组设置快捷键。
-
-## 名称、数据和会话恢复
-
-名称是导航列表中的别名，与原 Terminal 标签标题及终端内程序的会话名称独立。别名绑定 Obsidian 的终端标签 ID，所以同一目录下的多个终端可以分别命名。
-
-- 名称、分组、编号和折叠状态保存在本插件目录的 `data.json`。该文件属于个人配置，已被仓库的 `.gitignore` 排除。
-- Obsidian 恢复相同标签 ID 时，插件可以重新关联这些元数据。关闭后新建的标签具有新的身份，需要重新命名。
-- 在同一个终端里改开另一项任务，列表中的别名会保留，可以手动修改。
-- 本插件自身没有网络请求，也不解析或复制终端输出、笔记正文、模型聊天记录。
-
-终端进程及 Codex 会话由原 Terminal 和 Codex 管理。本插件不提供进程保活、自动恢复对话或执行状态识别；选中标记表示最近激活的终端。
-
-## 停用
-
-在第三方插件设置中停用 **终端会话导航**，即可移除导航面板。它仅移除自己的视图，已有 Terminal 标签继续保留。需要彻底卸载时，再删除插件目录；如需保留别名和分组，先备份 `data.json`。
-
-## 开发与验证
-
-`main.js` 就是源码，直接编辑即可，无需 npm 安装或打包。CSS 样式位于 `styles.css`。
-
-在支持 `node:test` 的 Node.js 环境中运行：
-
-```bash
-node --check main.js
-node --test tests/terminal-session-navigator.test.cjs
+请保留原 Terminal 配置、已有会话和笔记；不要重启 Obsidian 或 Terminal，
+也不要向正在运行的终端发送命令。
 ```
 
-测试覆盖同目录多终端独立命名、保存顺序、恢复元数据、聚焦原终端、删除分组、保存失败和停用行为。真实 Obsidian 中的验证范围记录在 [VALIDATION.md](VALIDATION.md)。
+## 开始使用
 
-布局适配使用了工作区标签 ID 和部分布局对象接口；这些接口的跨版本稳定性有限。提交问题时，请附上 Obsidian、Terminal 和本插件版本，以及布局和复现步骤。
+**单击切换 · 双击命名 · 条目右侧 ⋯ 移入分组 · 顶部搜索**。名称和分组保存在本机，终端进程与对话恢复仍由 Terminal 和 Codex 管理。
 
-## 许可证
+已验证：macOS、Obsidian **1.14.5**、Terminal **3.23.0**；其他系统和旧版尚未实测。详见 [验证记录](VALIDATION.md)。
 
-[MIT](LICENSE)。本仓库仅分发导航插件自己的代码；Terminal、Obsidian 和 Codex 由各自项目提供并适用各自条款。
-
-发布流程见 [PUBLISHING.md](PUBLISHING.md)。
+[MIT 许可证](LICENSE) · [所有版本](https://github.com/nosignalmxh/obsidian-terminal-session-navigator/releases) · [维护与发布](PUBLISHING.md)
