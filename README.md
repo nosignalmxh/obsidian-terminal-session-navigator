@@ -4,9 +4,7 @@
 
 **Terminal Session Navigator · 终端会话导航**，为 Obsidian 的 Terminal 插件增加一个轻量会话列表，继续使用你熟悉的终端和 Codex CLI。
 
-```text
-Markdown / Context  │  会话列表：命名、分组、搜索  │  Terminal / Codex
-```
+![工作流示意：左侧 Markdown 管理 Context，中间按项目整理多个 Agent 会话，右侧使用原有 Terminal；项目与对话均为虚构](assets/workflow-overview.png)
 
 - **每个任务有名字**：给论文修改、实验分析、项目开发的终端分别命名。
 - **按项目收拢对话**：多个 Agent 的终端会话分组排列，支持折叠和搜索。
